@@ -7,7 +7,13 @@ def star(animal, size):
         animal.forward(size)
         animal.right(144)
 
-star(warner, 200)
+for x in range(5):
+    warner.penup()
+    warner.forward(400)
+    warner.right(144)
+    warner.pendown()
+    star(warner,120)
+
 window.exitonclick()
 
 
