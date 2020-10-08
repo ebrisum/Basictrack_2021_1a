@@ -9,7 +9,7 @@ warner = turtle.Turtle()
 move = 30
 
 warner.speed(100)
-warner.shape("turtle")
+warner.shape("fish")
 
 for i in range(12):
     warner.penup()

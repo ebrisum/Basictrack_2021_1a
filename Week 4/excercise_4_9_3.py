@@ -7,7 +7,7 @@ def draw_poly(t, n, sz):
 
 window = turtle.Screen()
 warner = turtle.Turtle()
-draw_poly(warner, 8, 50)
+draw_poly(warner, 3, 100)
 window.exitonclick()
 
 
