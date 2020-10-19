@@ -64,8 +64,8 @@ else:
     transit_mode = None
 
 #API key from Google maps IPA (distance-matrix, directions):
-key_dismatrix= 'AIzaSyA0tkG51rUfuiLc8q1ohAdYYq8zpK4qvv0'
-key_dirmatrix= 'AIzaSyAnCobNK7GDHm3PiJusGNbeZh2y_AGsH00'
+key_dismatrix= 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+key_dirmatrix= 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 
 #parameters used for requests from google API
 params = {
