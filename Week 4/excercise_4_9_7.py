@@ -6,4 +6,4 @@ def sum_to(n):
     else:
         return n + sum_to(n-1)
 
-print(sum_to(10))
+print(sum_to(int(input("number:"))))
