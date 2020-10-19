@@ -54,30 +54,6 @@ def directionsAB(origins, destination, mode, transit_mode):
         final_instructions.append(i['html_instructions'])
     return final_instructions
 
-def unhtml(string):
-    # replace <tag>...</tag>, possibly more than once
-    done = False
-    while not done:
-        temp = re.sub(r'<([^/]\S*)[^>]*>[\s\S]*?</\1>', '', string)
-        done = temp == string
-        string = temp
-    # replace remaining standalone tags, if any
-    string = re.sub(r'<[^>]*>', '', string)
-    string = re.sub(r'\s{2,}', ' ', string)
-    return string.strip()
-
-def cleanup(element):
-    if isinstance(element, list):
-        for i, item in enumerate(element):
-            element[i] = cleanup(item)
-    elif isinstance(element, dict):
-        for key in element.keys():
-            element[key] = cleanup(element[key])
-    elif isinstance(element, basestring):
-        element = unhtml(element)
-
-    return element
-
 #ask for user inputs for all arguments used in functions
 origins = input("Where are you now?: ")
 destination = input("What is your destination: ")
