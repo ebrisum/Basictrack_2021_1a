@@ -1,3 +1,4 @@
+import regex as re
 import json
 import requests
 
@@ -8,7 +9,7 @@ def distance_Duration(key, origin, destination, mode, transit_mode):
     key:            str (API key)
     origins:        str (input)
     destinations:   str (input)
-    mode:           str
+    mode:           str (
     transit_mode    str
 
     output:
@@ -19,7 +20,7 @@ def distance_Duration(key, origin, destination, mode, transit_mode):
 
     url =('https://maps.googleapis.com/maps/api/distancematrix/json?'
           + '&departure_time=now'
-          + '&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+          + '&key='
           )
 
     response = requests.get(url, params)
@@ -29,11 +30,11 @@ def distance_Duration(key, origin, destination, mode, transit_mode):
     distance = round(distance / 1000, 1)
     duration = result['rows'][0]['elements'][0]['duration']['value']
     duration = int(duration / 60)
-    return duration, distance
+    return {'duration': duration, 'distance': distance}
 
 #function for providing directions:
 def directionsAB(origins, destination, mode, transit_mode):
-    key = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+    key = ''
     params = {
     'key': key,
     'origin': origins,
@@ -50,9 +51,16 @@ def directionsAB(origins, destination, mode, transit_mode):
     result = json.loads(response.text)
     instructions = result["routes"][0]['legs'][0]['steps']
     final_instructions=[]
-    for i in instructions:
-        final_instructions.append(i['html_instructions'])
+    for i, v in enumerate(instructions):
+        enum_instructions = str(i) +  (': ') +  v['html_instructions']
+        instruction= cleanhtml(enum_instructions)
+        final_instructions.append(instruction)
     return final_instructions
+
+def cleanhtml(raw_html):
+  cleanr = re.compile('<.*?>')
+  cleantext = re.sub(cleanr, '', raw_html)
+  return cleantext
 
 #ask for user inputs for all arguments used in functions
 origins = input("Where are you now?: ")
@@ -63,9 +71,9 @@ if mode == 'transit':
 else:
     transit_mode = None
 
-#API key from Google maps IPA (distance-matrix, directions):
-key_dismatrix= 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-key_dirmatrix= 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+#API gle maps IPA (distance-matrix, directions):
+key_dismatrix= ''
+key_dirmatrix= ''
 
 #parameters used for requests from google API
 params = {
@@ -76,8 +84,8 @@ params = {
     }
 
 #storing duration and distance values in variable and outputting distance and duration
-duration = distance_Duration(key_dismatrix, origins, destination, mode, transit_mode)[1]
-distance = distance_Duration(key_dismatrix, origins, destination, mode, transit_mode)[0]
+duration = distance_Duration(key_dismatrix, origins, destination, mode, transit_mode)['duration']
+distance = distance_Duration(key_dismatrix, origins, destination, mode, transit_mode)['distance']
 if duration<60:
     print("You will travel " + str(distance) + " kilometers, in a time of " + str(duration) + " minutes before you arrive at your destination")
 else:
@@ -89,7 +97,7 @@ want_Direction = input("Would you like to receive directions? (yes/no)")
 num = 1
 if want_Direction == 'yes':
     for i in (directionsAB(origins, destination, mode, transit_mode)):
-        print(str(num)+ ": " + i)
-        num+= 1
+        print(i)
+
 
 
